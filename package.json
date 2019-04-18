@@ -1,0 +1,15 @@
+{
+  "name": "passport-shraga",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "passport": "^0.4.0",
+    "passport-strategy": "^1.0.0"
+  }
+}
