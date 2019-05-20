@@ -9,9 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "njwt": "^1.0.0",
     "passport": "^0.4.0",
     "passport-strategy": "^1.0.0",
-    "ramda": "^0.26.1"
+    "ramda": "^0.26.1",
+    "secure-random": "^1.1.1"
   }
 }
