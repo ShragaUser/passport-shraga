@@ -1,10 +1,12 @@
-## Passport-Shraga
+## [Passport-Shraga](https://shragauser.github.io/passport-shraga/#/)
 [passport-shraga](https://github.com/ShragaUser/passport-shraga) is a [passport.js](http://www.passportjs.org/) authentication strategy that utilizes [Shraga](https://shragauser.github.io/adfs-proxy/#/) as an saml-idp proxy. 
 
 it is also availabe as an npm module and can be installed using: 
 ```
 npm i --save passport-shraga
 ```
+
+---
 
 ### Usage
 #### passport.js
@@ -30,6 +32,9 @@ passport.use(new Strategy(config, (profile, done) => {
     done(null, profile);
 }))
 ```
+
+----
+
 #### Strategy configuration options:
 ```callbackURL```: callback url for Shraga to return the signed JWT. Can be absolute or relative ( ```http://my-domian/path-to-callback``` OR ```/path-to-callback``` )
 
@@ -37,9 +42,14 @@ passport.use(new Strategy(config, (profile, done) => {
 
 ```transform```: Function Or Mapping-Object that transforms profile returned from Shraga. 
 
+----
+
 ##### Transform option:
 the tranform option can be configured if early manipulation of the User profile is required. 
 transform can ve a function or an object:
+
+----
+
 * in case of ```Function```: the function will recieve the profile and do any manipulation wanted then returns a new profile object to replace current user Profile. example: 
 ```
 const tranform = (user) => {
@@ -47,6 +57,9 @@ const tranform = (user) => {
   return {...user, fullName};
 }
 ```
+
+----
+
 * in case of Object: the object will act as a mapper and can decide which user properties will be passed on to Authenticate function and under which name they will be passed on as. example:
 ```
 const transform = {"id": "userId", "firstName":"fname", "lastName":"lname"};
