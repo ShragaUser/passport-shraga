@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>reveal-md</title>
+    <link rel="stylesheet" href="./css/reveal.css" />
+    <link rel="stylesheet" href="./css/theme/black.css" id="theme" />
+    <link rel="stylesheet" href="./css/highlight/zenburn.css" />
+    <link rel="stylesheet" href="./css/print/paper.css" type="text/css" media="print" />
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template">## Passport-Shraga
+[passport-shraga](https://github.com/ShragaUser/passport-shraga) is a [passport.js](http://www.passportjs.org/) authentication strategy that utilizes [Shraga](https://shragauser.github.io/adfs-proxy/#/) as an saml-idp proxy. 
+
+it is also availabe as an npm module and can be installed using: 
+```
+npm i --save passport-shraga
+```
+
+### Usage
+#### passport.js
+
+usage of passport-shraga is as followed:
+
+```
+const passport = require("passport");
+const { Strategy } = require("passport-shraga");
+
+passport.serializeUser((user, cb) => {
+    //serialize function
+});
+
+passport.deserializeUser((id, cb) => {
+    ///deserialize function
+});
+
+const config = {};
+
+passport.use(new Strategy(config, (profile, done) => {
+    console.log(`My Profile Is: ${profile}`);
+    done(null, profile);
+}))
+```
+#### Strategy configuration options:
+```callbackURL```: callback url for Shraga to return the signed JWT. Can be absolute or relative ( ```http://my-domian/path-to-callback``` OR ```/path-to-callback``` )
+
+```shragaURL```: Full URL to the [Shraga](https://shragauser.github.io/adfs-proxy/#/) instance running.
+
+```transform```: Function Or Mapping-Object that transforms profile returned from Shraga. 
+
+##### Transform option:
+the tranform option can be configured if early manipulation of the User profile is required. 
+transform can ve a function or an object:
+* in case of ```Function```: the function will recieve the profile and do any manipulation wanted then returns a new profile object to replace current user Profile. example: 
+```
+const tranform = (user) => {
+  const fullName = `${user.firstName} ${user.lastNmae}`;
+  return {...user, fullName};
+}
+```
+* in case of Object: the object will act as a mapper and can decide which user properties will be passed on to Authenticate function and under which name they will be passed on as. example:
+```
+const transform = {"id": "userId", "firstName":"fname", "lastName":"lname"};
+```
+the returned object would be: 
+```
+{userId: ObjectID, fname: String, lname: String}
+```
+</script></section></div>
+    </div>
+
+    <script src="./lib/js/head.min.js"></script>
+    <script src="./js/reveal.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+      // Optional libraries used to extend on reveal.js
+      var deps = [
+        { src: './lib/js/classList.js', condition: function() { return !document.body.classList; } },
+        { src: './plugin/markdown/marked.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+        { src: './plugin/markdown/markdown.js', condition: function() { return !!document.querySelector('[data-markdown]'); } },
+        { src: './plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: './plugin/zoom-js/zoom.js', async: true },
+        { src: './plugin/notes/notes.js', async: true },
+        { src: './plugin/math/math.js', async: true }
+      ];
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        dependencies: deps
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal.getQueryHash() || {};
+
+      var options = extend(defaultOptions, {}, queryOptions);
+    </script>
+
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+</html>
