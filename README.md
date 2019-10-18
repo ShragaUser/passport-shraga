@@ -42,6 +42,8 @@ passport.use(new Strategy(config, (profile, done) => {
 
 ```transform```: Function Or Mapping-Object that transforms profile returned from Shraga. 
 
+```useEnrichId```: (boolean) set to true if you want Shraga to return user profile with enrichId set to false to return user profile with SAML provider id.
+
 ----
 
 ##### Transform option:
