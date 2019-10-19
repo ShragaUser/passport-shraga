@@ -1,5 +1,5 @@
 ## [Passport-Shraga](https://shragauser.github.io/passport-shraga/#/)
-[passport-shraga](https://github.com/ShragaUser/passport-shraga) is a [passport.js](http://www.passportjs.org/) authentication strategy that utilizes [Shraga](https://shragauser.github.io/adfs-proxy/#/) as an saml-idp proxy. 
+[passport-shraga](https://github.com/ShragaUser/passport-shraga) is a [passport.js](http://www.passportjs.org/) authentication strategy that utilizes [Shraga](https://shragauser.github.io/adfs-proxy-shraga/) as an saml-idp proxy. 
 
 it is also availabe as an npm module and can be installed using: 
 ```
@@ -38,11 +38,11 @@ passport.use(new Strategy(config, (profile, done) => {
 #### Strategy configuration options:
 ```callbackURL```: callback url for Shraga to return the signed JWT. Can be absolute or relative ( ```http://my-domian/path-to-callback``` OR ```/path-to-callback``` )
 
-```shragaURL```: Full URL to the [Shraga](https://shragauser.github.io/adfs-proxy/#/) instance running.
+```shragaURL```: Full URL to the [Shraga](https://shragauser.github.io/adfs-proxy-shraga/) instance running.
 
 ```transform```: Function Or Mapping-Object that transforms profile returned from Shraga. 
 
-```useEnrichId```: (boolean) set to true if you want Shraga to return user profile with enrichId set to false to return user profile with SAML provider id.
+```useEnrichId```: (boolean) set to ```true``` if you want Shraga to return user profile with enrichId. set to ```false``` to return user profile with SAML provider id.
 
 ```allowedProviders```: Array of allowed identity provider names - if argument is provided only identity providers in this list are allowed to return user profiles. disallowed providers will be followed with authentication failure.
 
