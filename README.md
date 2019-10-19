@@ -35,16 +35,21 @@ passport.use(new Strategy(config, (profile, done) => {
 
 ----
 
-#### Strategy configuration options:
+#### Strategy configuration options (1):
 ```callbackURL```: callback url for Shraga to return the signed JWT. Can be absolute or relative ( ```http://my-domian/path-to-callback``` OR ```/path-to-callback``` )
 
 ```shragaURL```: Full URL to the [Shraga](https://shragauser.github.io/adfs-proxy-shraga/) instance running.
 
 ```transform```: Function Or Mapping-Object that transforms profile returned from Shraga. 
 
+----
+
+#### Strategy configuration options (2):
 ```useEnrichId```: (boolean) set to ```true``` if you want Shraga to return user profile with enrichId. set to ```false``` to return user profile with SAML provider id.
 
 ```allowedProviders```: Array of allowed identity provider names - if argument is provided only identity providers in this list are allowed to return user profiles. disallowed providers will be followed with authentication failure.
+
+```RelayState```: If RelayState is provided its value will be returned with user profile inside jwtBody ( as 'RelayState' ).
 
 ----
 
