@@ -1,10 +1,9 @@
 ## [Passport-Shraga](https://shragauser.github.io/passport-shraga/#/)
 [passport-shraga](https://github.com/ShragaUser/passport-shraga) is a [passport.js](http://www.passportjs.org/) authentication strategy that utilizes [Shraga](https://shragauser.github.io/adfs-proxy-shraga/) as an saml-idp proxy. 
 
-it is also availabe as an npm module and can be installed using: 
-```
-npm i --save passport-shraga
-```
+[![npm version](https://badge.fury.io/js/passport-shraga.svg)](https://badge.fury.io/js/passport-shraga)
+
+[![NPM](https://nodei.co/npm/passport-shraga.png)](https://nodei.co/npm/passport-shraga/)
 
 ---
 
