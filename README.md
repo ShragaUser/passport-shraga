@@ -8,11 +8,10 @@
 ---
 
 ### Usage
+usage of passport-shraga is as followed:
 #### passport.js
 
-usage of passport-shraga is as followed:
-
-```
+```js
 const passport = require("passport");
 const { Strategy } = require("passport-shraga");
 
@@ -30,6 +29,44 @@ passport.use(new Strategy(config, (profile, done) => {
     console.log(`My Profile Is: ${profile}`);
     done(null, profile);
 }))
+```
+
+----
+
+#### In server.js ( express app )
+
+```js
+// must be used for passport session
+const session = require("express-session");
+// must be used so passport can save and use cookies
+const cookieParser = require("cookie-parser");
+// require passport
+const passport = require("passport");
+// require code from previous section
+const shraga = require("./passport.js");
+
+// app intialization
+app.use(cookieParser());
+app.use(session({...config}));
+app.use(passport.initialize());
+app.use(passport.session());
+```
+
+----
+
+#### Routes
+Two routes must be configured with passport authenticate middleware
+
+```js
+app.get('/my/auth/route', passport.authenticate("shraga"), (req,res,next) => {
+    // user will not get here and will be redirected to shraga instance configured.
+});
+
+app.post('/my/auth/callback/route',  passport.authenticate("shraga"), (req,res,next) => {
+    // user will be authenticated and exist in request.
+    console.log(req.user);
+    res.redirect('/home');
+});
 ```
 
 ----
@@ -59,7 +96,7 @@ transform can ve a function or an object:
 ----
 
 * in case of ```Function```: the function will recieve the profile and do any manipulation wanted then returns a new profile object to replace current user Profile. example: 
-```
+```js
 const tranform = (user) => {
   const fullName = `${user.firstName} ${user.lastNmae}`;
   return {...user, fullName};
@@ -69,10 +106,30 @@ const tranform = (user) => {
 ----
 
 * in case of Object: the object will act as a mapper and can decide which user properties will be passed on to Authenticate function and under which name they will be passed on as. example:
-```
+```js
 const transform = {"id": "userId", "firstName":"fname", "lastName":"lname"};
 ```
 the returned object would be: 
-```
+```js
 {userId: ObjectID, fname: String, lname: String}
+```
+
+----
+
+#### RelayState
+
+If 'RelayState' exists in request query params in 'get' method middleware then RelayState option will be set as the value of the query param.
+
+```js
+const relayState = req.query.RelayState;
+options.RelayState = options.RelayState || relayState; 
+```
+
+'RelayState' should be concated to req.path or added ro req.query when you want your application to redirect to the value of req.user.RelayState like the following:
+
+```js
+app.use('/auth/shraga', passport.autheticate('shraga'), (req,res,next) => {
+    const { RelayState } = req.user;
+    res.redirect(`${RelayState}`);
+});
 ```
